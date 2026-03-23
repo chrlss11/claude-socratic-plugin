@@ -60,12 +60,11 @@ DEFAULT_CONFIG = {
 }
 
 
+def is_first_run():
+    return not os.path.exists(CONFIG_PATH)
+
+
 def load_config():
-    if not os.path.exists(CONFIG_PATH):
-        os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
-        with open(CONFIG_PATH, "w", encoding="utf-8") as f:
-            json.dump(DEFAULT_CONFIG, f, indent=2, ensure_ascii=False)
-        return DEFAULT_CONFIG
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -138,10 +137,63 @@ def build_context(config):
     return "\n".join(lines)
 
 
+def build_first_run_context():
+    types = DEFAULT_CONFIG["types"]
+    lines = [
+        "## 🎓 SOCRATIC PLUGIN — FIRST RUN SETUP (CRITICAL INSTRUCTION)",
+        "",
+        "This is the user's first session with claude-socratic-plugin installed.",
+        "NO config file exists yet at `~/.claude/socratic-config.json`.",
+        "",
+        "**BEFORE doing anything else — even if the user has already sent a message —**",
+        "you MUST run the `/socratic init` flow immediately and completely.",
+        "Do NOT skip this. Do NOT respond to the user's message first.",
+        "The setup takes priority over everything in this first session.",
+        "",
+        "## How to run the init flow",
+        "",
+        "1. Greet the user and explain that claude-socratic-plugin is installed and needs",
+        "   a quick one-time setup (30 seconds).",
+        "",
+        "2. Show each type one by one as a card:",
+        "",
+    ]
+
+    for t in types.values():
+        lines += [
+            "```",
+            f"{t['emoji']} {t['name']}",
+            f"{t['description']}",
+            f"Cuándo: {t['when']}",
+            "```",
+            "",
+        ]
+
+    lines += [
+        "3. After showing ALL cards, ask in a single message:",
+        "   '¿Cuáles tipos quieres activar? Escribe los nombres separados por coma,",
+        "   \"todos\" para activar todos, o \"ninguno\" para desactivar todos.'",
+        "",
+        "4. Based on the user's answer, build the config object using DEFAULT_CONFIG as base,",
+        "   setting `enabled: true/false` accordingly for each type.",
+        "   Write the final config to `~/.claude/socratic-config.json`.",
+        "",
+        "5. Show a confirmation summary:",
+        "   '✓ Configuración guardada. Puedes cambiarla en cualquier momento con /socratic toggle <nombre>.'",
+        "",
+        "6. ONLY after the init flow is complete, proceed to answer the user's original message (if any).",
+    ]
+
+    return "\n".join(lines)
+
+
 def main():
     try:
-        config = load_config()
-        context = build_context(config)
+        if is_first_run():
+            context = build_first_run_context()
+        else:
+            config = load_config()
+            context = build_context(config)
 
         output = {
             "hookSpecificOutput": {

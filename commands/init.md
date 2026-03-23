@@ -54,6 +54,7 @@ Puedes cambiarlos en cualquier momento con /socratic toggle <nombre>.
 
 ## Notas
 
+- Este flujo también se ejecuta automáticamente en la primera sesión si no existe `~/.claude/socratic-config.json`
 - Si el usuario ya tiene configuración, muestra el estado actual de cada tipo antes de preguntar
 - El comando es idempotente — se puede correr múltiples veces sin problema
 - No pierdas tipos personalizados que el usuario haya creado con `/socratic add`
