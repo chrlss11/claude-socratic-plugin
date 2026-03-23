@@ -11,6 +11,7 @@ Todos los cambios notables de claude-socratic-plugin se documentan aquí.
 - Hook `SessionStart` que inyecta contexto dinámico basado en tipos activos
 - Glosario persistente en `~/.claude/socratic-glossary.md` — los conceptos explicados nunca se repiten
 - Configuración en `~/.claude/socratic-config.json` con defaults automáticos al primer uso
+- Comando `/socratic init` — configuración inicial interactiva con ficha y ejemplo de cada tipo
 - Comando `/socratic list` — muestra todos los tipos y su estado
 - Comando `/socratic toggle <nombre>` — activa o desactiva un tipo
 - Comando `/socratic add <descripción>` — crea un nuevo tipo en lenguaje natural

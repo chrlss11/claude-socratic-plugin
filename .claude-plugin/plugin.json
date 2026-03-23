@@ -7,7 +7,8 @@
     "url": "https://github.com/chrlss11"
   },
   "commands": [
-    "./commands/socratic.md"
+    "./commands/socratic.md",
+    "./commands/init.md"
   ],
   "homepage": "https://github.com/chrlss11/claude-socratic-plugin",
   "repository": "https://github.com/chrlss11/claude-socratic-plugin",

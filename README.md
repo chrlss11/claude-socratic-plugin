@@ -130,6 +130,34 @@ claude plugin install chrlss11/claude-socratic-plugin
 
 ## Comandos
 
+### `/socratic init`
+Configuración inicial interactiva. Muestra cada tipo con descripción y ejemplo, y pregunta cuáles activar:
+
+```
+─────────────────────────────────────────────
+⊛ Curious
+Antes de ejecutar tareas significativas, Claude
+cuestiona sus propias suposiciones en voz alta.
+
+Ejemplo:
+  "¿Por qué está fallando aquí y no en el portal
+  legacy? Asumo que la sesión persiste — ¿es
+  correcto en este contexto?"
+
+Estado actual: ✓ activado
+─────────────────────────────────────────────
+
+¿Cuáles tipos quieres activar? Escribe los nombres separados por coma,
+o escribe "todos" / "ninguno".
+
+✓ Configuración guardada
+
+  Activados (5):  ⊛ Curious  ★ Insight  ⟳ Flow  🎓 Concept  ▲ Level Up
+  Desactivados (2):  ⬡ Tradeoff  ❐ Pattern
+```
+
+---
+
 ### `/socratic list`
 
 ```
