@@ -1,0 +1,8 @@
+{
+  "name": "claude-socratic-plugin",
+  "description": "Socratic learning mode for Claude Code — educational insight types, curiosity-driven questioning, and a personal concept glossary that grows over time.",
+  "author": {
+    "name": "chrlss11",
+    "url": "https://github.com/chrlss11"
+  }
+}
