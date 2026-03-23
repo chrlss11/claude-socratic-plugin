@@ -4,6 +4,11 @@ Todos los cambios notables de claude-socratic-plugin se documentan aquí.
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-22
+
+### Added
+- Comando `/socratic init` — configuración inicial interactiva con ficha y ejemplo de cada tipo
+
 ## [1.0.0] - 2026-03-22
 
 ### Added
