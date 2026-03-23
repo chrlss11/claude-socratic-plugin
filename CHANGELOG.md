@@ -4,6 +4,11 @@ Todos los cambios notables de claude-socratic-plugin se documentan aquí.
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-22
+
+### Changed
+- Primera sesión sin config detecta automáticamente la ausencia y ejecuta el flujo de init antes de responder al usuario
+
 ## [1.1.0] - 2026-03-22
 
 ### Added
