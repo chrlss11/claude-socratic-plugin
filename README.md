@@ -122,8 +122,21 @@ Los conceptos explicados se guardan en `~/.claude/socratic-glossary.md` — Clau
 
 ## Instalación
 
+**1. Registra el marketplace:**
 ```bash
-claude plugin install chrlss11/claude-socratic-plugin
+claude plugin marketplace add chrlss11/claude-socratic-plugin
+```
+
+**2. Instala el plugin:**
+```bash
+claude plugin install claude-socratic-plugin@claude-socratic-plugin
+```
+
+**3. Reinicia Claude Code.** En tu primera sesión el plugin te guiará automáticamente por la configuración inicial.
+
+O si ya instalaste y quieres configurar manualmente:
+```
+/socratic init
 ```
 
 ---
