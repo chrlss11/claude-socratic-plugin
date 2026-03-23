@@ -1,0 +1,20 @@
+{
+  "name": "claude-socratic-plugin",
+  "owner": {
+    "name": "chrlss11",
+    "email": ""
+  },
+  "metadata": {
+    "description": "Socratic learning mode for Claude Code — educational insight types, curiosity-driven questioning, and a personal concept glossary that grows over time.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "claude-socratic-plugin",
+      "source": "./",
+      "description": "Inyecta bloques de conocimiento contextual en las respuestas de Claude. 7 tipos de insights activables: Insight, Flow, Tradeoff, Pattern, Level Up, Concept y Curious.",
+      "category": "education",
+      "tags": ["learning", "education", "insights", "socratic", "autodidact", "patterns", "concepts"]
+    }
+  ]
+}
