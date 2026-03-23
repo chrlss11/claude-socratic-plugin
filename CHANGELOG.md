@@ -1,28 +1,27 @@
 # Changelog
 
-Todos los cambios notables de claude-socratic-plugin se documentan aquí.
+All notable changes to claude-socratic-plugin are documented here.
 
 ## [Unreleased]
 
 ## [1.2.0] - 2026-03-22
 
 ### Changed
-- Primera sesión sin config detecta automáticamente la ausencia y ejecuta el flujo de init antes de responder al usuario
+- First session without config automatically detects its absence and runs the init flow before responding to the user
 
 ## [1.1.0] - 2026-03-22
 
 ### Added
-- Comando `/socratic init` — configuración inicial interactiva con ficha y ejemplo de cada tipo
+- `/socratic init` command — interactive setup that shows each type with a description and example, then asks which to enable
 
 ## [1.0.0] - 2026-03-22
 
 ### Added
-- 7 tipos de insights activables: `★ Insight`, `⟳ Flow`, `⬡ Tradeoff`, `❐ Pattern`, `▲ Level Up`, `🎓 Concept`, `⊛ Curious`
-- Hook `SessionStart` que inyecta contexto dinámico basado en tipos activos
-- Glosario persistente en `~/.claude/socratic-glossary.md` — los conceptos explicados nunca se repiten
-- Configuración en `~/.claude/socratic-config.json` con defaults automáticos al primer uso
-- Comando `/socratic init` — configuración inicial interactiva con ficha y ejemplo de cada tipo
-- Comando `/socratic list` — muestra todos los tipos y su estado
-- Comando `/socratic toggle <nombre>` — activa o desactiva un tipo
-- Comando `/socratic add <descripción>` — crea un nuevo tipo en lenguaje natural
-- Compatible con Windows (Python puro, sin dependencias Unix)
+- 7 activatable insight types: `★ Insight`, `⟳ Flow`, `⬡ Tradeoff`, `❐ Pattern`, `▲ Level Up`, `🎓 Concept`, `⊛ Curious`
+- `SessionStart` hook that injects dynamic context based on active types
+- Persistent glossary at `~/.claude/socratic-glossary.md` — explained concepts are never repeated
+- Config at `~/.claude/socratic-config.json` with automatic defaults on first use
+- `/socratic list` command — shows all types and their current status
+- `/socratic toggle <name>` command — enables or disables a type
+- `/socratic add <description>` command — creates a new type from a natural language description
+- Windows compatible (pure Python, no Unix dependencies)

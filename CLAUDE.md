@@ -1,51 +1,51 @@
 # claude-socratic-plugin
 
-Plugin de Claude Code que implementa modo socrático de aprendizaje.
+Claude Code plugin that implements socratic learning mode.
 
-## Estructura
+## Structure
 
 ```
 .claude-plugin/
-  plugin.json        — metadata del plugin
-  marketplace.json   — índice del marketplace
+  plugin.json        — plugin metadata
+  marketplace.json   — marketplace index
 hooks/
-  hooks.json         — registra el hook SessionStart
+  hooks.json         — registers the SessionStart hook
 hooks-handlers/
-  session-start.py   — lee config y genera contexto dinámico
+  session-start.py   — reads config and generates dynamic context
 commands/
-  socratic.md        — skill para /socratic add|toggle|list
+  socratic.md        — skill for /socratic add|toggle|list
+  init.md            — skill for /socratic init
 ```
 
-## Archivos de usuario (generados automáticamente)
+## User files (auto-generated)
 
-- `~/.claude/socratic-config.json` — tipos activos y sus definiciones
-- `~/.claude/socratic-glossary.md` — glosario de conceptos explicados
+- `~/.claude/socratic-config.json` — active types and their definitions
+- `~/.claude/socratic-glossary.md` — glossary of explained concepts
 
-## Agregar un nuevo tipo built-in
+## Adding a new built-in type
 
-Editar `hooks-handlers/session-start.py` en `DEFAULT_CONFIG["types"]`:
+Edit `hooks-handlers/session-start.py` in `DEFAULT_CONFIG["types"]`:
 
 ```python
-"mi_tipo": {
+"my_type": {
     "emoji": "◆",
-    "name": "Mi Tipo",
-    "description": "Qué debe explicar este tipo.",
-    "when": "Cuándo usarlo",
+    "name": "My Type",
+    "description": "What this type should explain.",
+    "when": "When to use it",
     "enabled": True
 }
 ```
 
-Luego hacer bump de versión en `plugin.json` y `marketplace.json`, y actualizar `CHANGELOG.md`.
+Then bump the version in `plugin.json` and `marketplace.json`, and update `CHANGELOG.md`.
 
-## Convenciones
+## Conventions
 
-- Commits en español
-- Sin comentarios en el código
-- Tipos nuevos deben tener emoji único, nombre corto (1-2 palabras), y `when` específico
-- El glosario nunca se borra — solo se agrega
+- No comments in code
+- New types must have a unique emoji, short name (1-2 words), and specific `when` field
+- The glossary is append-only — never delete entries
 
-## Publicar una versión nueva
+## Releasing a new version
 
-1. Actualizar `version` en `.claude-plugin/plugin.json` y `.claude-plugin/marketplace.json`
-2. Agregar entrada en `CHANGELOG.md`
-3. Commit, push y tag: `git tag v1.x.x && git push --tags`
+1. Update `version` in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
+2. Add entry in `CHANGELOG.md`
+3. Commit, push and tag: `git tag v1.x.x && git push --tags`
