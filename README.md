@@ -1,58 +1,58 @@
 # claude-socratic-plugin
 
-> Modo socrático para Claude Code — aprende mientras construyes.
+> Socratic mode for Claude Code — learn while you build.
 
-Diseñado para desarrolladores empíricos: sin universidad, sin teoría vacía. Solo contexto útil en el momento exacto que lo necesitas.
-
----
-
-## ¿Qué hace?
-
-Inyecta bloques de conocimiento contextual en las respuestas de Claude, activados automáticamente según lo que está pasando en tu código.
-
-La clave: **⊛ Curious** aparece *antes* de ejecutar — Claude cuestiona sus propias suposiciones en voz alta antes de hacer algo. Los demás tipos aparecen *después*.
+Designed for empirical developers: no academia, no empty theory. Just useful context at the exact moment you need it.
 
 ---
 
-## Tipos de insights
+## What does it do?
+
+It injects contextual knowledge blocks into Claude's responses, triggered automatically based on what's happening in your code.
+
+The key: **⊛ Curious** appears *before* executing — Claude questions its own assumptions out loud before doing anything. All other types appear *after*.
+
+---
+
+## Insight types
 
 ### ⊛ Curious
-> Antes de ejecutar tareas significativas, Claude cuestiona sus suposiciones en voz alta.
+> Before executing significant tasks, Claude questions its assumptions out loud.
 
 ```
 ⊛ Curious ─────────────────────────────────────
-¿Por qué está fallando el login aquí y no en el portal legacy?
-Asumo que la sesión persiste entre requests — ¿es eso correcto
-en este contexto de Playwright? Si no, el problema está antes
-de esta función.
+Why is login failing here but not on the legacy portal?
+I'm assuming the session persists between requests — is that
+correct in this Playwright context? If not, the problem is
+upstream from this function.
 ─────────────────────────────────────────────────
 ```
 
 ---
 
 ### ★ Insight
-> Decisiones de implementación específicas al código recién escrito.
+> Specific implementation decisions in the code just written.
 
 ```
 ★ Insight ─────────────────────────────────────
-Se usa `waitForSelector` con timeout explícito en lugar del
-default porque el portal SAT tiene latencia variable (2-15s).
-El default de Playwright (30s) es demasiado permisivo y enmascara
-errores reales de carga.
+`waitForSelector` is used with an explicit timeout instead of
+the default because the SAT portal has variable latency (2-15s).
+Playwright's default (30s) is too permissive and masks real
+load errors.
 ─────────────────────────────────────────────────
 ```
 
 ---
 
 ### ⟳ Flow
-> Traza el camino de ejecución de código complejo.
+> Traces the execution path of complex code.
 
 ```
 ⟳ Flow ─────────────────────────────────────────
-request HTTP → detectPortal() → bifurcación legacy/nuevo
+HTTP request → detectPortal() → legacy/new branch
   ├─ legacy: ptscdecprov.clouda.sat.gob.mx
   │    └─ loginCIEC() → searchByPeriod() → downloadXML()
-  └─ nuevo:  pstcdypisr.clouda.sat.gob.mx (>= 2025)
+  └─ new:    pstcdypisr.clouda.sat.gob.mx (>= 2025)
        └─ loginEFirma() → selectYear() → exportCSV()
 ─────────────────────────────────────────────────
 ```
@@ -60,113 +60,113 @@ request HTTP → detectPortal() → bifurcación legacy/nuevo
 ---
 
 ### ⬡ Tradeoff
-> Qué alternativas existían y por qué se eligió este approach.
+> What alternatives existed and why this approach was chosen.
 
 ```
 ⬡ Tradeoff ─────────────────────────────────────
-Se pudo haber usado `page.evaluate()` para extraer datos del
-DOM, pero se eligió interceptar la respuesta de red porque:
-(1) es más estable ante cambios de UI, (2) el portal usa renders
-parciales que hacen el DOM inconsistente.
+`page.evaluate()` could have been used to extract data from
+the DOM, but intercepting the network response was chosen because:
+(1) it's more stable against UI changes, (2) the portal uses
+partial renders that make the DOM inconsistent.
 ─────────────────────────────────────────────────
 ```
 
 ---
 
 ### ❐ Pattern
-> El patrón de diseño en uso y por qué encaja aquí.
+> The design pattern in use and why it fits here.
 
 ```
 ❐ Pattern ────────────────────────────────────────
-Se aplica Strategy pattern: `detectPortal()` selecciona en
-runtime qué implementación usar (legacy vs nuevo). Encaja aquí
-porque SAT tiene dos portales con la misma interfaz lógica pero
-diferente UI — Strategy permite agregar un tercer portal sin
-tocar el orquestador.
+Strategy pattern applied: `detectPortal()` selects at runtime
+which implementation to use (legacy vs new). It fits here
+because SAT has two portals with the same logical interface but
+different UI — Strategy allows adding a third portal without
+touching the orchestrator.
 ─────────────────────────────────────────────────
 ```
 
 ---
 
 ### ▲ Level Up
-> Conocimiento transferible a otros contextos.
+> Transferable knowledge applicable beyond this specific code.
 
 ```
 ▲ Level Up ──────────────────────────────────────
-Cuando un servicio externo cambia su portal sin deprecar el
-anterior, el patrón más sostenible es detectar la versión en
-runtime en lugar de mantener dos implementaciones separadas.
-Aplica a cualquier integración con APIs gubernamentales o
-sistemas legacy que coexisten.
+When an external service changes its portal without deprecating
+the old one, the most sustainable pattern is to detect the version
+at runtime instead of maintaining two separate implementations.
+Applies to any integration with government APIs or coexisting
+legacy systems.
 ─────────────────────────────────────────────────
 ```
 
 ---
 
 ### 🎓 Concept
-> Define términos, patrones y paradigmas — sin academicismo.
+> Defines terms, patterns, and paradigms — no academicism.
 
 ```
 🎓 Concept ───────────────────────────────────────
 **AST (Abstract Syntax Tree)**
-Representación del código como árbol de nodos. Cada nodo es
-una construcción del lenguaje (función, variable, if). Se usa
-en linters, compiladores y herramientas como cocoindex-code
-para entender código sin ejecutarlo.
+Representation of code as a tree of nodes. Each node is a
+language construct (function, variable, if). Used in linters,
+compilers, and tools like cocoindex-code to understand code
+without executing it.
 ─────────────────────────────────────────────────
 ```
 
-Los conceptos explicados se guardan en `~/.claude/socratic-glossary.md` — Claude los consulta al inicio de cada sesión y nunca repite una explicación.
+Explained concepts are saved to `~/.claude/socratic-glossary.md` — Claude checks it at the start of each session and never repeats an explanation.
 
 ---
 
-## Instalación
+## Installation
 
-**1. Registra el marketplace:**
+**1. Register the marketplace:**
 ```bash
 claude plugin marketplace add chrlss11/claude-socratic-plugin
 ```
 
-**2. Instala el plugin:**
+**2. Install the plugin:**
 ```bash
 claude plugin install claude-socratic-plugin@claude-socratic-plugin
 ```
 
-**3. Reinicia Claude Code.** En tu primera sesión el plugin te guiará automáticamente por la configuración inicial.
+**3. Restart Claude Code.** On your first session the plugin will automatically guide you through the initial setup.
 
-O si ya instalaste y quieres configurar manualmente:
+Or if you already installed and want to configure manually:
 ```
 /socratic init
 ```
 
 ---
 
-## Comandos
+## Commands
 
 ### `/socratic init`
-Configuración inicial interactiva. Muestra cada tipo con descripción y ejemplo, y pregunta cuáles activar:
+Interactive initial setup. Shows each type with its description and example, and asks which ones to enable:
 
 ```
 ─────────────────────────────────────────────
 ⊛ Curious
-Antes de ejecutar tareas significativas, Claude
-cuestiona sus propias suposiciones en voz alta.
+Before executing significant tasks, Claude
+questions its own assumptions out loud.
 
-Ejemplo:
-  "¿Por qué está fallando aquí y no en el portal
-  legacy? Asumo que la sesión persiste — ¿es
-  correcto en este contexto?"
+Example:
+  "Why is it failing here but not on the legacy
+  portal? I'm assuming the session persists — is
+  that correct in this context?"
 
-Estado actual: ✓ activado
+Current status: ✓ enabled
 ─────────────────────────────────────────────
 
-¿Cuáles tipos quieres activar? Escribe los nombres separados por coma,
-o escribe "todos" / "ninguno".
+Which types do you want to enable? Type the names separated by commas,
+or type "all" / "none".
 
-✓ Configuración guardada
+✓ Configuration saved
 
-  Activados (5):  ⊛ Curious  ★ Insight  ⟳ Flow  🎓 Concept  ▲ Level Up
-  Desactivados (2):  ⬡ Tradeoff  ❐ Pattern
+  Enabled (5):   ⊛ Curious  ★ Insight  ⟳ Flow  🎓 Concept  ▲ Level Up
+  Disabled (2):  ⬡ Tradeoff  ❐ Pattern
 ```
 
 ---
@@ -174,71 +174,70 @@ o escribe "todos" / "ninguno".
 ### `/socratic list`
 
 ```
-Tipos activos: 6 de 7
+Active types: 6 of 7
 
-  ✓  ⊛  Curious    — Antes de tareas significativas
-  ✓  ★  Insight    — Después de escribir código
-  ✓  ⟳  Flow       — Después de código async/pipeline
-  ✓  ⬡  Tradeoff   — Después de decisiones de diseño
-  ✓  ❐  Pattern    — Cuando se aplica un patrón
-  ✓  🎓 Concept    — Cuando aparece un término técnico
-  ✗  ▲  Level Up   — Desactivado
+  ✓  ⊛  Curious    — Before significant tasks
+  ✓  ★  Insight    — After writing code
+  ✓  ⟳  Flow       — After async/pipeline code
+  ✓  ⬡  Tradeoff   — After design decisions
+  ✓  ❐  Pattern    — When a pattern is applied
+  ✓  🎓 Concept    — When a technical term appears
+  ✗  ▲  Level Up   — Disabled
 ```
 
 ---
 
-### `/socratic toggle <nombre>`
+### `/socratic toggle <name>`
 
 ```
 /socratic toggle flow
 
-✓ Flow está ahora desactivado
+✓ Flow is now disabled
 ```
 
 ---
 
-### `/socratic add <descripción>`
+### `/socratic add <description>`
 
 ```
-/socratic add quiero que me expliques el impacto en performance
-              de cada decision que tomamos
+/socratic add explain the performance impact of each decision we make
 
-✓ Nuevo tipo creado:
+✓ New type created:
 
   Emoji:       ⚡
-  Nombre:      Performance
-  Descripción: Analiza el impacto en performance de la decisión
-               tomada — memoria, latencia, CPU, o I/O.
-  Cuándo:      Después de cambios con impacto potencial en rendimiento
+  Name:        Performance
+  Description: Analyzes the performance impact of the decision
+               made — memory, latency, CPU, or I/O.
+  When:        After changes with potential performance impact
 ```
 
 ---
 
-## Glosario
+## Glossary
 
-Cada concepto explicado por 🎓 se persiste en `~/.claude/socratic-glossary.md`:
+Each concept explained by 🎓 is persisted in `~/.claude/socratic-glossary.md`:
 
 ```markdown
 ## AST (Abstract Syntax Tree)
-Representación del código como árbol de nodos...
+Representation of code as a tree of nodes...
 
 ## Strategy Pattern
-Patrón que encapsula algoritmos intercambiables...
+Pattern that encapsulates interchangeable algorithms...
 
-## Idempotencia
-Propiedad de una operación que produce el mismo resultado...
+## Idempotency
+Property of an operation that produces the same result...
 ```
 
-Claude consulta este archivo al inicio de cada sesión. Los conceptos ya explicados no se repiten — solo se referencian.
+Claude checks this file at the start of each session. Already-explained concepts are not repeated — only referenced.
 
 ---
 
-## Configuración manual
+## Manual configuration
 
-Los tipos se almacenan en `~/.claude/socratic-config.json`. Puedes editarlo directamente o usar los comandos `/socratic`.
+Types are stored in `~/.claude/socratic-config.json`. You can edit it directly or use the `/socratic` commands.
 
 ---
 
-## Licencia
+## License
 
 MIT — [chrlss11](https://github.com/chrlss11)
